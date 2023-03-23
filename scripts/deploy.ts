@@ -1,18 +1,16 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = currentTimestampInSeconds + 60;
 
-  const lockedAmount = ethers.utils.parseEther("0.001");
+  // const Lock = await ethers.getContractFactory("Lock");
+  // const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+  const Nft = await ethers.getContractFactory("NftTesting");
+  const nft = await Nft.deploy();
 
-  const Lock = await ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
-
-  await lock.deployed();
-
+  await nft.deployed();
+  const id = await nft.awardItem("0x9c4201F39CeB69E27B03C5B526c973038361aC2A", "C:/Users/abrown/token13.json");
   console.log(
-    `Lock with ${ethers.utils.formatEther(lockedAmount)}ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
+    id
   );
 }
 
