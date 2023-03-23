@@ -9,12 +9,14 @@ contract NftTrade {
   IERC721 public _nft;
 
   constructor() {
-    _token = IERC20(0x1b5d50493c85dE2F8D7825A38c5A0E9C78cE649C);
-    _nft = IERC721(0x001DCA988bbC3852D78d5575FbD85B55C240EC53);
+    _token = IERC20(0x9553af78aAa02Fb3A7Ed20dCb86b029bCdcDcbfc);
+    _nft = IERC721(0xBc1D0ec2889C5765F0880276A94004a90e1bC4d1);
   }
 
-  function _buyNft(address seller, address buyer, uint256 tokenId) public {
-    _token.transfer(seller, 1);
-    _nft.transferFrom(buyer, seller, tokenId);
+  function buyNft(address seller, address buyer, uint256 tokenId, uint256 amount) public {
+    if (_token.balanceOf(buyer) > amount) {
+      _token.transferFrom(buyer, seller, amount);
+      _nft.transferFrom(buyer, seller, tokenId);
+    }
   }
 }
